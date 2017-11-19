@@ -59,7 +59,7 @@ def balls_generation():
     points = []
     x_vals = [200, 350, 400, 550, 700]
     y_vals = [100, 150, 300, 450, 500]
-    for i in len(x_vals):
+    for i in range(len(x_vals)):
         point = Ball(x_vals[i], y_vals[i])
         points.append(point)
     return points
