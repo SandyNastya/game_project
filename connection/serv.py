@@ -63,36 +63,5 @@ class Server:
             self.conn2.sendto(self.g2_cur_xpos, self.addr2)
             self.conn2.sendto(self.g2_cur_ypos, self.addr2)
 
-
-
-
-
     def stop_connection(self):
         self.s.close()
-    """
-    def get_and_send_result(self):
-        while True:
-            data = float(self.conn.recv(25).decode())
-            if data == 0:
-                if self.game_time != 0:
-                    winner_n = "WIN NASTYA"
-                else:
-                    winner_n = "WIN NOBODY"
-            elif self.game_time == 0:
-                winner_n = "WIN NASTYA"
-            else:
-                if self.game_time > data:
-                    winner_n = "WIN LIZA"
-                elif self.game_time < data:
-                    winner_n = "WIN NASTYA"
-                else:
-                    winner_n = "WIN NOBODY"
-
-            self.conn.sendall(winner_n.encode())
-
-            print(winner_n)
-            winner(winner_n)
-
-            self.s.close()
-            break
-    """

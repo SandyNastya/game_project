@@ -22,9 +22,6 @@ print(player2.x, "", player2.y)
 players.append(player1)
 players.append(player2)
 
-#ball = Ball(200, 200)
-#objects.append(ball)
-
 player1_score = 0
 player2_score = 0
 
