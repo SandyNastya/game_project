@@ -8,8 +8,6 @@ WINDOW_HEIGHT = 600
 NUM_OF_BALLS = 10
 WINDOW_COLOR = BLACK
 
-black = (0, 0, 0)
-white = (255, 255, 255)
 
 pygame.init()
 WINDOW = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
@@ -25,15 +23,15 @@ def main_menu(screen):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 done = True
-        screen.fill(white)
+        screen.fill(WHITE)
         game_nameFontObj = pygame.font.Font(None, 90)
-        game_name = game_nameFontObj.render("WHO IS FASTER", True, black)
+        game_name = game_nameFontObj.render("WHO IS FASTER", True, BLACK)
         game_nameRectObj = game_name.get_rect()
         game_nameRectObj.center = (WINDOW_WIDTH / 2, WINDOW_HEIGHT * 0.25)
         screen.blit(game_name, game_nameRectObj)
 
         instructionFontObj = pygame.font.Font(None, 30)
-        instruction = instructionFontObj.render("Collect green circles more than your friend".upper(), True, black)
+        instruction = instructionFontObj.render("Collect green circles more than your friend".upper(), True, BLACK)
         instructionRectObj = instruction.get_rect()
         instructionRectObj.center = (WINDOW_WIDTH / 2, WINDOW_HEIGHT * 0.75)
         screen.blit(instruction, instructionRectObj)

@@ -1,10 +1,9 @@
 from balls import Ball
 from window import *
 
-
+RADIUS = 30
 STEP = 3
 left = right = up = down = False
-YELLOW = (255, 255, 0)
 
 class Player():
 #class Player(Ball):
@@ -13,7 +12,7 @@ class Player():
         self.x = x
         self.y = y
         self.color = color
-        self.radius = 30
+        self.radius = RADIUS
         self.figure = pygame.draw.circle(WINDOW, self.color, (self.x, self.y), self.radius)
 
     def moving(self, right, left, up, down):
@@ -29,13 +28,12 @@ class Player():
         if self.y + self.radius + STEP <= WINDOW_HEIGHT:
             if down:
                 self.y += STEP
-        #print(self.x, " ", self.y)
 
     def send_x(self):
-        return self.figure.x
+        return self.x
 
     def send_y(self):
-        return self.figure.y
+        return self.y
 
     def get_x(self, x):
         self.x = x
@@ -44,7 +42,4 @@ class Player():
         self.y = y
 
     def draw(self, window, color = RED):
-        self.figure = pygame.draw.circle(window, color, (self.x, self.y), self.radius)
-
-    def draw_opponent(self, window, color = YELLOW):
         self.figure = pygame.draw.circle(window, color, (self.x, self.y), self.radius)

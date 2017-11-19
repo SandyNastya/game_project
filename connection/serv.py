@@ -1,14 +1,56 @@
 import socket
+from player import RADIUS
+from window import WINDOW_WIDTH, WINDOW_HEIGHT
 
 
+pos1_x = str(RADIUS).encode()
+pos1_y = str(RADIUS).encode()
+pos2_x = str(WINDOW_WIDTH - RADIUS).encode()
+pos2_y = str(WINDOW_HEIGHT - RADIUS).encode()
 
 class Server:
     def __init__(self, HOST, PORT):
         self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.game_time = 0
         self.s.bind((HOST, PORT))
+
+        self.g1_cur_xpos = 0
+        self.g1_cur_ypos = 0
+        self.g2_cur_xpos = 0
+        self.g2_cur_ypos = 0
+
         self.s.listen(1)
-        self.conn, self.addr = self.s.accept()#conn - socket, addr[0] - client ip
+        self.conn1, self.addr1 = self.s.accept()#conn - socket, addr[0] - client ip
+        self.s.listen(1)
+        self.conn2, self.addr2 = self.s.accept()
+
+    #send start positions
+    def send_pos1_x(self):
+        self.conn1.sendto(pos1_x, self.addr1)
+        self.conn2.sendto(pos2_x, self.addr2)
+    def send_pos1_y(self):
+        self.conn1.sendto(pos1_y, self.addr1)
+        self.conn2.sendto(pos2_y, self.addr2)
+    def send_pos2_x(self):
+        self.conn1.sendto(pos2_x, self.addr1)
+        self.conn2.sendto(pos1_x, self.addr2)
+    def send_pos2_y(self):
+        self.conn1.sendto(pos2_y, self.addr1)
+        self.conn2.sendto(pos1_y, self.addr2)
+
+    #get and send current positions
+    def get_send_cur_pos(self):
+        self.g1_cur_xpos = self.conn1.recv(20)
+        self.g1_cur_ypos = self.conn1.recv(20)
+        self.g2_cur_xpos = self.conn2.recv(20)
+        self.g2_cur_ypos = self.conn2.recv(20)
+
+        self.conn1.sendto(self.g1_cur_xpos, self.addr1)
+        self.conn2.sendto(self.g2_cur_xpos, self.addr2)
+        self.conn1.sendto(self.g1_cur_ypos, self.addr1)
+        self.conn2.sendto(self.g2_cur_ypos, self.addr2)
+
+    def stop_connection(self):
+        self.s.close()
     """
     def get_and_send_result(self):
         while True:
