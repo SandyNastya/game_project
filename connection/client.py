@@ -28,6 +28,9 @@ class Client:
     def get_opp_y(self):
         return int(self.s.recv(20).decode())
 
+    def check_state(self, state):
+        self.s.send(str(state).encode())
+
     def stop_connection(self):
         self.s.close()
 

@@ -11,6 +11,8 @@ server.send_pos1_y()
 server.send_pos2_x()
 server.send_pos2_y()
 
-server.get_send_cur_pos()
+while server.conn1_state and server.conn2_state not in ("True" or "None"):
+    server.get_cur_pos()
+    #server.send_cur_pos()
 
 server.stop_connection()

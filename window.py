@@ -1,6 +1,7 @@
 import pygame
 from color import *
 import time
+from balls import Ball
 
 
 WINDOW_WIDTH = 800
@@ -45,12 +46,21 @@ def winner(winner):
         for event in pygame.event.get():
             if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 done = True
-        screen.fill(white)
+        screen.fill(WHITE)
         winnerFontObj = pygame.font.Font(None, 90)
-        winner_name = winnerFontObj.render(winner, True, black)
+        winner_name = winnerFontObj.render(winner, True, BLACK)
         winner_nameRectObj = winner_name.get_rect()
         winner_nameRectObj.center = (WINDOW_WIDTH / 2, WINDOW_HEIGHT * 0.5)
         screen.blit(winner_name, winner_nameRectObj)
 
         pygame.display.flip()
+
+def balls_generation():
+    points = []
+    x_vals = [200, 350, 400, 550, 700]
+    y_vals = [100, 150, 300, 450, 500]
+    for i in len(x_vals):
+        point = Ball(x_vals[i], y_vals[i])
+        points.append(point)
+    return points
 

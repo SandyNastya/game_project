@@ -1,14 +1,14 @@
-from balls import Ball
-from window import *
+from window import WINDOW, WINDOW_HEIGHT, WINDOW_WIDTH
+from color import RED
+import pygame
 
 RADIUS = 30
 STEP = 3
 left = right = up = down = False
 
-class Player():
-#class Player(Ball):
+
+class Player:
     def __init__(self, x, y, color = RED):
-        #Ball.__init__(self, x, y)
         self.x = x
         self.y = y
         self.color = color

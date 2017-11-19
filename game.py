@@ -1,13 +1,15 @@
 from player import *
 from connection.client import Client
+from balls import Ball
+from window import *
 
 
 HOST = '192.168.1.35'
 PORT = 49055
 
-objects = []
+objects = balls_generation()
 players = []
-work = True
+
 
 client = Client(HOST, PORT)
 
@@ -20,18 +22,23 @@ print(player2.x, "", player2.y)
 players.append(player1)
 players.append(player2)
 
-ball = Ball(200, 200)
-objects.append(ball)
+#ball = Ball(200, 200)
+#objects.append(ball)
 
 player1_score = 0
 player2_score = 0
 
+main_menu(WINDOW)
+
 timer = pygame.time.Clock()
+work = True
 while work:
     timer.tick(60)
+    client.check_state(work)
     for e in pygame.event.get():
         if e.type == pygame.QUIT or e.type == pygame.KEYDOWN and e.key == pygame.K_ESCAPE:
             work = False
+            client.check_state(work)
             print(player1_score, " ", player2_score)
             client.stop_connection()
 
@@ -64,6 +71,9 @@ while work:
     player1.draw(WINDOW, WINDOW_COLOR)
     player2.draw(WINDOW, WINDOW_COLOR)
 
+    for point in objects:
+        point.draw(WINDOW)
+
     player1.moving(right, left, up, down)
     client.send_x(player1.x)
     client.send_y(player1.y)
@@ -74,9 +84,9 @@ while work:
     player1.draw(WINDOW)
     player2.draw(WINDOW, YELLOW)
 
-
-    for obj in objects:
-        obj.draw(WINDOW)
-
     pygame.display.update()
 
+if player1_score > player2_score:
+    winner("YOU WIN")
+else:
+    winner("YOU LOSE")
