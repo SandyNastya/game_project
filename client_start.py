@@ -1,8 +1,6 @@
 from player import *
-from connection.server import Server
-from balls import Ball
+from connection.client import Client
 from window import *
-
 
 
 HOST = '192.168.1.35'
@@ -12,10 +10,10 @@ objects = balls_generation()
 players = []
 
 
-server = Server(HOST, PORT)
+client = Client(HOST, PORT)
 
-player1 = Player(RADIUS, RADIUS)
-player2 = Player(WINDOW_WIDTH - RADIUS, WINDOW_HEIGHT - RADIUS)
+player2 = Player(RADIUS, RADIUS)
+player1 = Player(WINDOW_WIDTH - RADIUS, WINDOW_HEIGHT - RADIUS)
 print(player1.x, "", player1.y)
 print(player2.x, "", player2.y)
 
@@ -32,13 +30,13 @@ timer = pygame.time.Clock()
 work = True
 while work:
     timer.tick(60)
-    server.check_state(work)
+    client.check_state(work)
     for e in pygame.event.get():
         if e.type == pygame.QUIT or e.type == pygame.KEYDOWN and e.key == pygame.K_ESCAPE:
             work = False
-            server.check_state(work)
+            client.check_state(work)
             print(player1_score, " ", player2_score)
-            server.stop_connection()
+            client.stop_connection()
 
         if e.type == pygame.KEYDOWN and e.key == pygame.K_RIGHT:
             right = True
@@ -73,11 +71,11 @@ while work:
         point.draw(WINDOW)
 
     player1.moving(right, left, up, down)
-    server.send_cur_xpos(player1.x)
-    server.send_cur_ypos(player1.y)
+    client.send_x(player1.x)
+    client.send_y(player1.y)
 
-    player2.get_x(server.get_cur_opp_xpos())
-    player2.get_y(server.get_cur_opp_ypos())
+    player2.get_x(client.get_opp_x())
+    player2.get_y(client.get_opp_y())
 
     player1.draw(WINDOW)
     player2.draw(WINDOW, YELLOW)

@@ -8,15 +8,7 @@ class Client:
         self.game_time = 0
         self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.s.connect((self.HOST, self.PORT))
-
-    def get_self_x0(self):
-        return int(self.s.recv(20).decode())
-    def get_self_y0(self):
-        return int(self.s.recv(20).decode())
-    def get_opp_x0(self):
-        return int(self.s.recv(20).decode())
-    def get_opp_y0(self):
-        return int(self.s.recv(20).decode())
+        #self.s.setblocking(0)
 
     def send_x(self, x):
         self.s.send(str(x).encode())

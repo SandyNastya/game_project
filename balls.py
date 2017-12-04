@@ -1,4 +1,6 @@
-from window import *
+from window import WINDOW
+from color import GREEN
+import pygame
 
 
 class Ball:
